@@ -1,0 +1,506 @@
+﻿@model List<BaiTapLon.Models.CartItem>
+@{
+    ViewBag.Title = "Thanh Toán Trực Tuyến";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+    var userLogin = (Mood.EF2.User)ViewBag.LoginUser;
+    var listCart = (List<BaiTapLon.Models.CartItem>)ViewBag.listCart;
+}
+<div class="right-sidebar woocommerce-checkout">
+    <!-- ====== MAIN CONTENT ====== -->
+    <div class="page-header border-bottom">
+        <div class="container">
+            <div class="d-md-flex justify-content-between align-items-center py-4">
+                <h1 class="page-title font-size-3 font-weight-medium m-0 text-lh-lg">THANH TOÁN</h1>
+                <nav class="woocommerce-breadcrumb font-size-2">
+                    <a href="/home/TrangChu" class="h-primary">Trang Chủ</a>
+                    <span class="breadcrumb-separator mx-1"><i class="fas fa-angle-right"></i></span>
+                    <a href="/gio-hang" class="h-primary">Giỏ Hàng</a>
+                    <span class="breadcrumb-separator mx-1"><i class="fas fa-angle-right"></i></span>Thanh Toán
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div id="content" class="site-content bg-punch-light space-bottom-3">
+        <div class="col-full container">
+            <div id="primary" class="content-area">
+                <main id="main" class="site-main">
+                    <article id="post-6" class="post-6 page type-page status-publish hentry">
+                        <header class="entry-header space-top-2 space-bottom-1 mb-2">
+                            <h4 class="entry-title font-size-7 text-center">Thanh Toán</h4>
+                        </header>
+
+                        <!-- .entry-header -->
+                        <div class="entry-content">
+                            <div class="woocommerce">
+                                <div class="woocommerce-info p-4 bg-white border">
+                                    Có phiếu giảm giá?
+                                    <a class="showcoupon"
+                                       data-toggle="collapse"
+                                       href="#collapseExample9"
+                                       role="button"
+                                       aria-expanded="false"
+                                       aria-controls="collapseExample9">
+                                        Nhấn vào để nhập phiếu của bạn.
+                                    </a>
+                                </div>
+
+                                <form id="collapseExample9" class="collapse checkout_coupon mt-4 p-4 bg-white border" method="post">
+                                    <div class="row d-flex">
+                                        <p class="col-md-4 d-inline form-row form-row-first mb-3 mb-md-0">
+                                            <input type="text" name="coupon_code1" class="input-text form-control" placeholder="Mã giảm giá" id="coupon_code1" value="">
+                                        </p>
+
+                                        <p class="col-md-3 d-inline form-row form-row-last">
+                                            <input type="submit" class="button form-control border-0 height-4 btn btn-dark rounded-0" name="apply_coupon" value="Áp Dụng">
+                                        </p>
+                                    </div>
+
+                                    <div class="clear"></div>
+                                </form>
+                                @if (ViewBag.Error == null)
+                                {
+                                    if (userLogin != null)
+                                    {
+                                        <form method="post" class="checkout woocommerce-checkout row mt-8" action="thanh-toan-truc-tuyen">
+                                            <div class="col2-set col-md-6 col-lg-7 col-xl-8 mb-6 mb-md-0" id="customer_details">
+                                                <div class="px-4 pt-5 bg-white border">
+                                                    <div class="woocommerce-billing-fields">
+
+                                                        <h3 class="mb-4 font-size-3">Chi tiết thanh toán</h3>
+
+                                                        <div class="woocommerce-billing-fields__field-wrapper row">
+                                                            <p class="col-lg-12 mb-4d75 form-row form-row-first validate-required woocommerce-invalid woocommerce-invalid-required-field" id="billing_first_name_field" data-priority="10">
+                                                                <label for="billing_first_name" class="form-label">Họ tên <abbr class="required" title="required">*</abbr></label>
+                                                                <input type="text" class="input-text form-control" name="shipName" id="billing_first_name" placeholder="" value="@userLogin.Name" autocomplete="given-name" autofocus="autofocus">
+                                                            </p>
+
+
+
+
+                                                            <p class="col-12 mb-3 form-row form-row-wide address-field validate-required" id="billing_address_1_field" data-priority="50">
+                                                                <label for="billing_address_1" class="form-label">Địa chỉ <abbr class="required" title="required">*</abbr></label>
+                                                                <input type="text" class="input-text form-control" name="shipAddress" id="billing_address_1" placeholder="House number and street name" value="@userLogin.Adress" autocomplete="address-line1">
+                                                            </p>
+
+                                                            <p class="col-12 mb-4d75 form-row form-row-first validate-required validate-phone" id="billing_phone_field" data-priority="100">
+                                                                <label for="billing_phone" class="form-label">Số điện thoại <abbr class="required" title="required">*</abbr></label>
+                                                                <input type="tel" class="input-text form-control" name="shipMobile" id="billing_phone" placeholder="" value="@userLogin.Phone" autocomplete="tel">
+                                                            </p>
+
+                                                            <p class="col-12 mb-4d75 form-row form-row-last validate-required validate-email" id="billing_email_field" data-priority="110">
+                                                                <label for="billing_email" class="form-label">Địa chỉ email <abbr class="required" title="required">*</abbr></label>
+                                                                <input type="email" class="input-text form-control" name="shipMail" id="billing_email" placeholder="" value="@userLogin.Email" autocomplete="email">
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="px-4 pt-5 bg-white border border-top-0 mt-n-one">
+                                                    <div class="woocommerce-additional-fields">
+                                                        <h3 class="mb-4 font-size-3">Thông tin thêm</h3>
+                                                        <div class="woocommerce-additional-fields__field-wrapper">
+                                                            <p class="col-12 mb-4d75 px-0 form-row notes" id="order_comments_field" data-priority="">
+                                                                <label for="order_comments" class="form-label">Ghi chú đơn hàng (Tùy chọn)</label>
+                                                                <textarea name="order_comments" class="input-text form-control" id="order_comments" placeholder="Ghi chú về đơn đặt hàng của bạn, ví dụ như ghi chú đặc biệt để giao hàng." rows="8" cols="5"></textarea>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <h3 id="order_review_heading" class="d-none">Đơn hàng của bạn</h3>
+
+                                            <div id="order_review" class="col-md-6 col-lg-5 col-xl-4 woocommerce-checkout-review-order">
+                                                <div id="checkoutAccordion" class="border border-gray-900 bg-white mb-5">
+                                                    <div class="p-4d875 border">
+                                                        <div id="checkoutHeadingOnee" class="checkout-head">
+                                                            <a href="#" class="text-dark d-flex align-items-center justify-content-between"
+                                                               data-toggle="collapse"
+                                                               data-target="#checkoutCollapseOnee"
+                                                               aria-expanded="true"
+                                                               aria-controls="checkoutCollapseOnee">
+
+                                                                <h3 class="checkout-title mb-0 font-weight-medium font-size-3">Chi tiết đơn hàng</h3>
+
+                                                                <svg class="mins" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="2px">
+                                                                    <path fill-rule="evenodd" fill="rgb(22, 22, 25)" d="M0.000,-0.000 L15.000,-0.000 L15.000,2.000 L0.000,2.000 L0.000,-0.000 Z" />
+                                                                </svg>
+
+                                                                <svg class="plus" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="15px">
+                                                                    <path fill-rule="evenodd" fill="rgb(22, 22, 25)" d="M15.000,8.000 L9.000,8.000 L9.000,15.000 L7.000,15.000 L7.000,8.000 L0.000,8.000 L0.000,6.000 L7.000,6.000 L7.000,-0.000 L9.000,-0.000 L9.000,6.000 L15.000,6.000 L15.000,8.000 Z" />
+                                                                </svg>
+                                                            </a>
+                                                        </div>
+
+                                                        <div id="checkoutCollapseOnee" class="mt-4 checkout-content collapse show"
+                                                             aria-labelledby="checkoutHeadingOnee"
+                                                             data-parent="#checkoutAccordion">
+                                                            <table class="shop_table woocommerce-checkout-review-order-table">
+                                                                <thead class="d-none">
+                                                                    <tr>
+                                                                        <th class="product-name">Tên Sản Phẩm</th>
+                                                                        <th class="product-total">Tổng</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @{ double sum = 0;}
+                                                                    @foreach (var item in listCart)
+                                                                    {
+                                                                        var price_sale = 0;
+                                                                        if (item.Product.PriceSale != null)
+                                                                        {
+                                                                            price_sale = (int)item.Product.PriceSale;
+                                                                        }
+                                                                        var price_deal = (item.Product.GiaTien - item.Product.GiaTien / 100 * (price_sale));
+                                                                        sum += price_deal * item.Quantity;
+                                                                        <tr class="cart_item">
+                                                                            <td class="product-name">
+                                                                                @item.Product.Name&nbsp; <strong class="product-quantity">× @item.Quantity</strong>
+                                                                            </td>
+                                                                            <td class="product-total">
+                                                                                <span class="woocommerce-Price-amount amount">@price_deal.ToString("N0")đ</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                    @{ double sumUSD = Math.Round(sum / 24000, 2);}
+
+
+                                                                </tbody>
+                                                                <tfoot class="d-none">
+                                                                    <tr class="cart-subtotal">
+                                                                        <th>Tổng phụ</th>
+                                                                        <td><span class="woocommerce-Price-amount amount">@sum.ToString("N0")đ</span></td>
+                                                                    </tr>
+
+                                                                    <tr class="order-total">
+                                                                        <th>Tổng Thanh Toán</th>
+                                                                        <td><strong><span class="woocommerce-Price-amount amount">@sum.ToString("N0")đ</span></strong> </td>
+                                                                    </tr>
+                                                                </tfoot>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="p-4d875 border">
+                                                        <div id="checkoutHeadingTwo" class="checkout-head">
+                                                            <a href="#" class="text-dark d-flex align-items-center justify-content-between"
+                                                               data-toggle="collapse"
+                                                               data-target="#checkoutCollapseTwo"
+                                                               aria-expanded="false"
+                                                               aria-controls="checkoutCollapseTwo">
+
+                                                                <h3 class="checkout-title mb-0 font-weight-medium font-size-3">Vận Chuyển</h3>
+
+                                                                <svg class="mins" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="2px">
+                                                                    <path fill-rule="evenodd" fill="rgb(22, 22, 25)" d="M0.000,-0.000 L15.000,-0.000 L15.000,2.000 L0.000,2.000 L0.000,-0.000 Z" />
+                                                                </svg>
+
+                                                                <svg class="plus" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="15px">
+                                                                    <path fill-rule="evenodd" fill="rgb(22, 22, 25)" d="M15.000,8.000 L9.000,8.000 L9.000,15.000 L7.000,15.000 L7.000,8.000 L0.000,8.000 L0.000,6.000 L7.000,6.000 L7.000,-0.000 L9.000,-0.000 L9.000,6.000 L15.000,6.000 L15.000,8.000 Z" />
+                                                                </svg>
+                                                            </a>
+                                                        </div>
+
+                                                        <div id="checkoutCollapseTwo" class="mt-4 checkout-content collapse"
+                                                             aria-labelledby="checkoutHeadingTwo"
+                                                             data-parent="#checkoutAccordion">
+                                                            <!-- Checkboxes -->
+                                                            <ul id="shipping_method">
+                                                                <li>
+                                                                    <input type="radio" name="shipping_method[0]" data-index="0" id="shipping_method_0_flat_rate1" value="flat_rate:1" class="shipping_method">
+                                                                    <label for="shipping_method_0_flat_rate1">Miễn phí: Chậm</label>
+                                                                </li>
+
+                                                                <li>
+                                                                    <input type="radio" name="shipping_method[0]" data-index="0" id="shipping_method_0_flat_rate2" value="flat_rate:2" class="shipping_method" checked="checked">
+                                                                    <label for="shipping_method_0_flat_rate2">Trung bình: <span class="woocommerce-Price-amount amount">30.000đ</span></label>
+                                                                </li>
+
+                                                                <li>
+                                                                    <input type="radio" name="shipping_method[0]" data-index="0" id="shipping_method_0_flat_rate3" value="flat_rate:2" class="shipping_method" checked="checked">
+                                                                    <label for="shipping_method_0_flat_rate3">Nhanh: <span class="woocommerce-Price-amount amount">45.000đ</span></label>
+                                                                </li>
+                                                            </ul>
+                                                            <!-- End Checkboxes -->
+                                                            <span class="font-size-2">Giao đến.</span><a href="#" class="font-weight-medium h-primary ml-3 font-size-2">Đổi địa chỉ</a>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="p-4d875 border">
+                                                        <div id="checkoutHeadingThree" class="checkout-head">
+                                                            <a href="#" class="text-dark d-flex align-items-center justify-content-between"
+                                                               data-toggle="collapse"
+                                                               data-target="#checkoutCollapseThree"
+                                                               aria-expanded="true"
+                                                               aria-controls="checkoutCollapseThree">
+
+                                                                <h3 class="checkout-title mb-0 font-weight-medium font-size-3">Phiếu giảm giá</h3>
+
+                                                                <svg class="mins" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="2px">
+                                                                    <path fill-rule="evenodd" fill="rgb(22, 22, 25)" d="M0.000,-0.000 L15.000,-0.000 L15.000,2.000 L0.000,2.000 L0.000,-0.000 Z" />
+                                                                </svg>
+
+                                                                <svg class="plus" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="15px">
+                                                                    <path fill-rule="evenodd" fill="rgb(22, 22, 25)" d="M15.000,8.000 L9.000,8.000 L9.000,15.000 L7.000,15.000 L7.000,8.000 L0.000,8.000 L0.000,6.000 L7.000,6.000 L7.000,-0.000 L9.000,-0.000 L9.000,6.000 L15.000,6.000 L15.000,8.000 Z" />
+                                                                </svg>
+                                                            </a>
+                                                        </div>
+
+                                                        <div id="checkoutCollapseThree" class="mt-4 checkout-content collapse show"
+                                                             aria-labelledby="checkoutHeadingThree"
+                                                             data-parent="#checkoutAccordion">
+                                                            <div class="coupon">
+                                                                <label for="coupon_code">Phiếu giảm giá:</label>
+                                                                <input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="Coupon code" autocomplete="off">
+                                                                <input type="submit" class="button" name="apply_coupon" value="Áp dụng">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="p-4d875 border">
+                                                        <table class="shop_table shop_table_responsive">
+                                                            <tbody>
+                                                                <tr class="order-total">
+                                                                    <th>Tổng Thanh Toán</th>
+                                                                    <td data-title="Total"><strong><span class="woocommerce-Price-amount amount">@sum.ToString("N0")đ</span></strong> </td>
+
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <input type="hidden" name="sumOrder" value="@sum" />
+                                                    <div class="p-4d875 border">
+                                                        <div id="checkoutHeadingThreee" class="checkout-head">
+                                                            <a href="#" class="text-dark d-flex align-items-center justify-content-between"
+                                                               data-toggle="collapse"
+                                                               data-target="#checkoutCollapseThreee"
+                                                               aria-expanded="true"
+                                                               aria-controls="checkoutCollapseThreee">
+
+                                                                <h3 class="checkout-title mb-0 font-weight-medium font-size-3">Hình thức thanh toán</h3>
+
+                                                                <svg class="mins" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="2px">
+                                                                    <path fill-rule="evenodd" fill="rgb(22, 22, 25)" d="M0.000,-0.000 L15.000,-0.000 L15.000,2.000 L0.000,2.000 L0.000,-0.000 Z" />
+                                                                </svg>
+
+                                                                <svg class="plus" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="15px">
+                                                                    <path fill-rule="evenodd" fill="rgb(22, 22, 25)" d="M15.000,8.000 L9.000,8.000 L9.000,15.000 L7.000,15.000 L7.000,8.000 L0.000,8.000 L0.000,6.000 L7.000,6.000 L7.000,-0.000 L9.000,-0.000 L9.000,6.000 L15.000,6.000 L15.000,8.000 Z" />
+                                                                </svg>
+                                                            </a>
+                                                        </div>
+
+                                                        <div id="checkoutCollapseThreee" class="mt-4 checkout-content collapse show"
+                                                             aria-labelledby="checkoutHeadingThreee"
+                                                             data-parent="#checkoutAccordion">
+                                                            <div id="payment" class="woocommerce-checkout-payment">
+                                                                <script>
+                                                                    $(document).ready(function () {
+                                                                        $("#ATM_ONLINE").click(function () {
+                                                                            $("#NH").slideToggle("slow");
+                                                                        });
+                                                                    });
+
+                                                                </script>
+
+                                                                <ul class="wc_payment_methods payment_methods methods">
+                                                                    @*<li class="wc_payment_method payment_method_paypal">
+                                                                            <input id="payment_method_paypal" type="radio" class="input-radio" name="payment_method" value="PAYPAL">
+                                                                            <label class="slide-trigger " for="payment_method_paypal" data-target="PAYPAL">
+                                                                                <img class=" pl-3 " style="width:100px" src="~/assets/img/imgbook/NL.png" alt="Alternate Text" />
+                                                                                <span class="pl-2 text-secondary" style="font-size:15px;"> PAYPAL </span>
+                                                                            </label>
+                                                                            <div class="payment_box payment_method_paypal" style="display: block;">
+                                                                                <p>Thực hiện thanh toán của bạn bằng tài khoản PAYPAL.</p>
+                                                                            </div>
+                                                                        </li>*@
+
+
+
+                                                                    <li class="wc_payment_method payment_method_cheque">
+                                                                        <input id="payment_method_cheque" type="radio" class="input-radio" name="payment_method" value="MOMO" data-order_button_text="">
+
+                                                                        <label for="4" class="text-success">
+                                                                            <img style="width:100px" class=" pl-2 " src="~/assets/img/imgbook/momo.png" alt="Alternate Text" />
+                                                                            <span class="pl-2 text-secondary" style="font-size:15px;"> Momo</span>
+                                                                        </label>
+                                                                        <div class="payment_box payment_method_cheque" style="display: block;">
+                                                                            <p>Sử dụng ví điện tử Momo để quét mã QR , vui lòng đặt camera vào đúng mã để việc thanh toán được nhanh chóng.</p>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="wc_payment_method payment_method_cod">
+                                                                        <input id="payment_method_cod" type="radio" class="input-radio" name="payment_method" value="COD" checked="checked" data-order_button_text="">
+
+                                                                        <label for="4" class="text-success">
+                                                                            <img style="width:100px" class=" pl-2 " src="~/assets/img/imgbook/cod.png" alt="Alternate Text" />
+                                                                            <span class="pl-2 text-secondary" style="font-size:15px;"> Thanh toán giao hàng</span>
+                                                                        </label>
+                                                                        <div class="payment_box payment_method_cod" style="display: block;">
+                                                                            <p>Thanh toán bằng tiền mặt khi giao hàng.</p>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row place-order">
+                                                    <input type="submit" class="button alt btn btn-dark btn-block rounded-0 py-4" name="woocommerce_checkout_place_order" id="place_order" value="Thanh toán hóa đơn" data-value="Thanh toán hóa đơn">
+                                                </div>
+
+                                                <!-- Paypal button-->
+                                                <div id="smart-button-container">
+                                                    <br />
+                                                    <br />
+                                                    
+                                                    <div style="text-align: center"><h2>OR</h2></div>
+                                                    
+                                        <div style="visibility: hidden; text-align: center"><label for="description"> </label><input type="text" name="descriptionInput" id="description" maxlength="127" value=" "></div>
+                                          <p id="descriptionError" style="visibility: hidden; color:red; text-align: center;">Please enter a description</p>
+                                        <div style="text-align: center"><label for="amount">TOTAL: </label><input name="amountInput" type="number" id="amount" value="@sumUSD" ><span> USD</span></div>
+                                          <p id="priceLabelError" style="visibility: hidden; color:red; text-align: center;">Please enter a price</p>
+                                        <div id="invoiceidDiv" style="text-align: center; display: none;"><label for="invoiceid"> </label><input name="invoiceid" maxlength="127" type="text" id="invoiceid" value="" ></div>
+                                          <p id="invoiceidError" style="visibility: hidden; color:red; text-align: center;">Please enter an Invoice ID</p>
+                                        <div style="text-align: center; margin-top: 0.625rem;" id="paypal-button-container"></div>
+                                        </div>
+
+                                            </div>
+                                        </form>
+                                    }
+                                }
+
+                                else
+                                {
+                                    <div class="alert alert-danger" role="alert">
+                                        @ViewBag.Error
+                                    </div>
+
+
+                                }
+
+                            </div>
+                        </div>
+                        <!-- .entry-content -->
+
+
+                    </article>
+                    <!-- #post-## -->
+                </main>
+                <!-- #main -->
+            </div>
+            <!-- #primary -->
+        </div>
+        <!-- .col-full -->
+    </div>
+
+</div>
+
+<script src="https://www.paypal.com/sdk/js?client-id=AU2Z85mYt3BdiFn3eUshH8vwEYawd58QgQSTuLfDVOcFGuCvXYoE4MeNSWZ0HLchPrJfdegtY31pWQE3&enable-funding=venmo&currency=USD" data-sdk-integration-source="button-factory"></script>
+<script>
+    function initPayPalButton() {
+        var description = document.querySelector('#smart-button-container #description');
+        var amount = document.querySelector('#smart-button-container #amount');
+        var descriptionError = document.querySelector('#smart-button-container #descriptionError');
+        var priceError = document.querySelector('#smart-button-container #priceLabelError');
+        var invoiceid = document.querySelector('#smart-button-container #invoiceid');
+        var invoiceidError = document.querySelector('#smart-button-container #invoiceidError');
+        var invoiceidDiv = document.querySelector('#smart-button-container #invoiceidDiv');
+
+        var elArr = [description, amount];
+
+        if (invoiceidDiv.firstChild.innerHTML.length > 1) {
+            invoiceidDiv.style.display = "block";
+        }
+
+        var purchase_units = [];
+        purchase_units[0] = {};
+        purchase_units[0].amount = {};
+
+        function validate(event) {
+            return event.value.length > 0;
+        }
+
+        paypal.Buttons({
+            style: {
+                color: 'gold',
+                shape: 'pill',
+                label: 'checkout',
+                layout: 'vertical',
+
+            },
+
+            onInit: function (data, actions) {
+                actions.disable();
+
+                if (invoiceidDiv.style.display === "block") {
+                    elArr.push(invoiceid);
+                }
+
+                elArr.forEach(function (item) {
+                    item.addEventListener('keyup', function (event) {
+                        var result = elArr.every(validate);
+                        if (result) {
+                            actions.enable();
+                        } else {
+                            actions.disable();
+                        }
+                    });
+                });
+            },
+
+            onClick: function () {
+                if (description.value.length < 1) {
+                    descriptionError.style.visibility = "visible";
+                } else {
+                    descriptionError.style.visibility = "hidden";
+                }
+
+                if (amount.value.length < 1) {
+                    priceError.style.visibility = "visible";
+                } else {
+                    priceError.style.visibility = "hidden";
+                }
+
+                if (invoiceid.value.length < 1 && invoiceidDiv.style.display === "block") {
+                    invoiceidError.style.visibility = "visible";
+                } else {
+                    invoiceidError.style.visibility = "hidden";
+                }
+
+                purchase_units[0].description = description.value;
+                purchase_units[0].amount.value = amount.value;
+
+                if (invoiceid.value !== '') {
+                    purchase_units[0].invoice_id = invoiceid.value;
+                }
+            },
+
+            createOrder: function (data, actions) {
+                return actions.order.create({
+                    purchase_units: purchase_units,
+                });
+            },
+
+            onApprove: function (data, actions) {
+                return actions.order.capture().then(function (orderData) {
+
+                    // Full available details
+                    console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+
+                    // Show a success message within this page, e.g.
+                    /*const element = document.getElementById('paypal-button-container');
+                    element.innerHTML = '';
+                    element.innerHTML = '<h3>Thank you for your payment!</h3>';*/
+                    window.location.href = "/cart/confirm_orderPaymentOnline"
+                    // Or go to another URL:  actions.redirect('thank_you.html');
+
+                });
+            },
+
+            onError: function (err) {
+                console.log(err);
+            }
+        }).render('#paypal-button-container');
+    }
+    initPayPalButton();
+</script>
