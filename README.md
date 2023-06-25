@@ -1,15 +1,14 @@
 # Project Web ASP.NET
 
 ## Project name: Clothes Store
-#
 
 ## Team: OkeOke
 
 ## Members:
-- ### Nguyễn Lê Anh Quốc - 4501104193
-- ### Đoàn Minh Nhật - 4401104160 (lớp 02)
-- ### Đinh Nhật Minh - 4501104141
-- ### Võ Thành Quang - 4501104189
-- ### Nguyễn Phương Ngân - 4301104114
-- ### Vũ Trường Sơn - 4501104200
+- ### Nguyễn Lê Anh Quốc - 45.01.104.193
+- ### Đoàn Minh Nhật - 44.01.104.160
+- ### Đinh Nhật Minh - 45.01.104.141
+- ### Võ Thành Quang - 45.01.104.189
+- ### Nguyễn Phương Ngân - 43.01.104.114
+- ### Vũ Trường Sơn - 45.01.104.200
 
