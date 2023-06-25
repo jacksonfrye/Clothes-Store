@@ -1,4 +1,4 @@
-# Project Web ASP.NET
+# Project Web ASP.NET Core
 
 ## Project name: Clothes Store
 
